@@ -10,12 +10,12 @@ import {
   Menu,
   MenuItem,
   makeStyles,
-} from '@material-ui/core'
+} from '@material-ui/core/index'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import CopyIcon from 'mdi-material-ui/ContentCopy'
 import CalendarIcon from 'mdi-material-ui/Calendar'
-import DialogTitleWrapper from '../dialogs/components/DialogTitleWrapper'
+import DialogTitleWrapper from '../../dialogs/components/DialogTitleWrapper'
 
 const CAL_URL =
   'https://www.calendarlabs.com/ical-calendar/ics/22/Chicago_Cubs_-_MLB.ics'

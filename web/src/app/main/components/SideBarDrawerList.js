@@ -29,7 +29,7 @@ import { authLogout } from '../../actions'
 import { connect } from 'react-redux'
 import RequireConfig, { Config } from '../../util/RequireConfig'
 import NavSubMenu from './NavSubMenu'
-import UserSettings from '../../users/UserSettings'
+import UserSettings from '../../users/settings/UserSettings'
 
 const navIcons = {
   Alerts: AlertsIcon,
