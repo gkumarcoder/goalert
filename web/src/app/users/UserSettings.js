@@ -6,17 +6,34 @@ import {
   Dialog,
   DialogContent,
   DialogActions,
+  ListItemIcon,
   Menu,
   MenuItem,
   makeStyles,
 } from '@material-ui/core'
+import RefreshIcon from '@material-ui/icons/Refresh'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
-import { Calendar as CalendarIcon } from 'mdi-material-ui'
+import CopyIcon from 'mdi-material-ui/ContentCopy'
+import CalendarIcon from 'mdi-material-ui/Calendar'
 import DialogTitleWrapper from '../dialogs/components/DialogTitleWrapper'
 
 const CAL_URL =
   'https://www.calendarlabs.com/ical-calendar/ics/22/Chicago_Cubs_-_MLB.ics'
-const options = ['Subscribe to My Shifts', 'Refresh URL', 'Copy URL']
+
+const options = [
+  {
+    title: 'Subscribe to My Shifts',
+    icon: CalendarIcon,
+  },
+  {
+    title: 'Refresh Calendar URL',
+    icon: RefreshIcon,
+  },
+  {
+    title: 'Copy Calendar URL',
+    icon: CopyIcon,
+  },
+]
 
 const useStyles = makeStyles(theme => ({
   calIcon: {
@@ -49,6 +66,9 @@ export default function UserSettings(props) {
     }
   }
 
+  const Icon = options[selectedIndex].icon
+  const title = options[selectedIndex].title
+
   return (
     <Dialog fullWidth open={props.open} onClose={props.onClose}>
       <DialogTitleWrapper fullScreen={false} title='Settings' />
@@ -64,8 +84,8 @@ export default function UserSettings(props) {
             onClick={handleButtonClick}
             variant='contained'
           >
-            <CalendarIcon className={classes.calIcon} />
-            {options[selectedIndex]}
+            <Icon className={classes.calIcon} />
+            {title}
           </Button>
           <Button
             color='primary'
@@ -87,8 +107,12 @@ export default function UserSettings(props) {
             <MenuItem
               key={idx}
               onClick={event => handleMenuItemClick(event, idx)}
+              selected={idx === selectedIndex}
             >
-              {option}
+              <ListItemIcon>
+                <option.icon />
+              </ListItemIcon>
+              {option.title}
             </MenuItem>
           ))}
         </Menu>
