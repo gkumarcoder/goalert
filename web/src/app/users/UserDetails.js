@@ -3,7 +3,6 @@ import p from 'prop-types'
 import gql from 'graphql-tag'
 import Query from '../util/Query'
 import DetailsPage from '../details/DetailsPage'
-import StatusUpdateNotification from './UserStatusUpdatePreference'
 import { UserAvatar } from '../util/avatar'
 import UserContactMethodList from './UserContactMethodList'
 import { AddAlarm, SettingsPhone } from '@material-ui/icons'
@@ -156,11 +155,6 @@ export default class UserDetails extends React.PureComponent {
                 : 'Not currently on-call',
             },
           ]}
-          titleFooter={
-            this.props.readOnly ? null : (
-              <StatusUpdateNotification userID={this.props.userID} />
-            )
-          }
           pageFooter={
             <Grid container spacing={2}>
               <UserContactMethodList
