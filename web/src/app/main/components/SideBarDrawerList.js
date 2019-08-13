@@ -29,6 +29,7 @@ import { authLogout } from '../../actions'
 import { connect } from 'react-redux'
 import RequireConfig, { Config } from '../../util/RequireConfig'
 import NavSubMenu from './NavSubMenu'
+import UserSettings from '../../users/UserSettings'
 
 const navIcons = {
   Alerts: AlertsIcon,
@@ -81,6 +82,10 @@ export default class SideBarDrawerList extends React.PureComponent {
     classes: p.object.isRequired,
   }
 
+  state = {
+    showSettingsDialog: false,
+  }
+
   renderSidebarLink = (icon, path, label, props = {}) => {
     return (
       <Link to={path} className={this.props.classes.nav} {...props}>
@@ -102,9 +107,9 @@ export default class SideBarDrawerList extends React.PureComponent {
     )
   }
 
-  renderSidebarItem = (IconComponent, label) => {
+  renderSidebarItem = (IconComponent, label, ListItemProps) => {
     return (
-      <ListItem button tabIndex={-1}>
+      <ListItem button tabIndex={-1} {...ListItemProps}>
         <ListItemIcon>
           <IconComponent className={this.props.classes.navIcon} />
         </ListItemIcon>
@@ -206,6 +211,11 @@ export default class SideBarDrawerList extends React.PureComponent {
               )
             }
           </Config>
+
+          {this.renderSidebarItem(AdminIcon, 'Settings', {
+            onClick: () => this.setState({ showSettingsDialog: true }),
+          })}
+
           {this.renderSidebarLink(
             LogoutIcon,
             '/api/v2/identity/logout',
@@ -219,6 +229,11 @@ export default class SideBarDrawerList extends React.PureComponent {
           )}
           {this.renderSidebarNavLink(CurrentUserAvatar, '/profile', 'Profile')}
         </List>
+
+        <UserSettings
+          onClose={() => this.setState({ showSettingsDialog: false })}
+          open={this.state.showSettingsDialog}
+        />
       </React.Fragment>
     )
   }
