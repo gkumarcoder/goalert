@@ -23,12 +23,15 @@ export default function UserSettings(props) {
   // todo: make better
   if (!userID) return null
 
+  const onClose = () =>
+    dispatch({ type: SET_USER_SETTINGS_OPEN, payload: false })
+
   return (
     <Dialog
       fullWidth
       fullScreen={isFullScreen}
       open={userSettingsOpen}
-      onClose={() => dispatch({ type: SET_USER_SETTINGS_OPEN, payload: false })}
+      onClose={onClose}
     >
       <DialogTitleWrapper title='Settings' />
       <DialogContent>
@@ -42,7 +45,7 @@ export default function UserSettings(props) {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={props.onClose} color='primary' variant='contained'>
+        <Button onClick={onClose} color='primary' variant='contained'>
           Done
         </Button>
       </DialogActions>
