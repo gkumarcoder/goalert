@@ -2,10 +2,12 @@ import React from 'react'
 import {
   Button,
   ButtonGroup,
+  Grid,
   ListItemIcon,
   Menu,
   MenuItem,
   makeStyles,
+  Typography,
 } from '@material-ui/core/index'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
@@ -19,14 +21,17 @@ const options = [
   {
     title: 'Subscribe to My Shifts',
     icon: CalendarIcon,
+    caption: 'Subscribe to your upcoming shifts via your preferred calendar',
   },
   {
     title: 'Refresh Calendar URL',
     icon: RefreshIcon,
+    caption: 'Generate a new calendar URL for private use',
   },
   {
     title: 'Copy Calendar URL',
     icon: CopyIcon,
+    caption: 'Some applications require manually pasting the URL to subscribe',
   },
 ]
 
@@ -63,61 +68,69 @@ export default function CalendarSubscribe() {
 
   const Icon = options[selectedIndex].icon
   const title = options[selectedIndex].title
+  const caption = options[selectedIndex].caption
 
   return (
-    <React.Fragment>
-      <ButtonGroup
-        variant='contained'
-        color='primary'
-        aria-label='split button'
-      >
-        <Button
-          color='primary'
-          href={selectedIndex === 0 ? CAL_URL : null}
-          onClick={handleButtonClick}
+    <Grid container spacing={1}>
+      <Grid item xs={12}>
+        <ButtonGroup
           variant='contained'
-        >
-          <Icon className={classes.calIcon} />
-          {title}
-        </Button>
-        <Button
           color='primary'
-          size='small'
-          aria-owns={anchorEl ? 'menu-list-grow' : undefined}
-          aria-haspopup='true'
-          onClick={handleOpenMenu}
+          aria-label='split button'
         >
-          <ArrowDropDownIcon />
-        </Button>
-      </ButtonGroup>
-      <Menu
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={() => setAnchorEl(null)}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        getContentAnchorEl={null}
-      >
-        {options.map((option, idx) => (
-          <MenuItem
-            key={idx}
-            onClick={event => handleMenuItemClick(event, idx)}
-            selected={idx === selectedIndex}
+          <Button
+            color='primary'
+            href={selectedIndex === 0 ? CAL_URL : null}
+            onClick={handleButtonClick}
+            variant='contained'
           >
-            <ListItemIcon>
-              <option.icon />
-            </ListItemIcon>
-            {option.title}
-          </MenuItem>
-        ))}
-      </Menu>
-    </React.Fragment>
+            <Icon className={classes.calIcon} />
+            {title}
+          </Button>
+          <Button
+            color='primary'
+            size='small'
+            aria-owns={anchorEl ? 'menu-list-grow' : undefined}
+            aria-haspopup='true'
+            onClick={handleOpenMenu}
+          >
+            <ArrowDropDownIcon />
+          </Button>
+        </ButtonGroup>
+        <Menu
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={() => setAnchorEl(null)}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          getContentAnchorEl={null}
+        >
+          {options.map((option, idx) => (
+            <MenuItem
+              key={idx}
+              onClick={event => handleMenuItemClick(event, idx)}
+              selected={idx === selectedIndex}
+            >
+              <ListItemIcon>
+                <option.icon />
+              </ListItemIcon>
+              {option.title}
+            </MenuItem>
+          ))}
+        </Menu>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography variant='caption' color='textSecondary'>
+          {caption}
+        </Typography>
+      </Grid>
+    </Grid>
   )
 }
