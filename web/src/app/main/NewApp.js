@@ -21,6 +21,7 @@ import LazyNewUserSetup from './components/NewUserSetup'
 import Login from './components/Login'
 import URLErrorDialog from './URLErrorDialog'
 import { SkipToContentLink } from '../util/SkipToContentLink'
+import UserSettings from '../users/settings/UserSettings'
 
 const drawerWidth = '12em'
 
@@ -116,6 +117,8 @@ export default class App extends React.PureComponent {
               />
             </LazyMobileSideBar>
           </Hidden>
+
+          <UserSettings />
 
           <URLErrorDialog />
 

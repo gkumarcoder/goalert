@@ -1,24 +1,36 @@
 import React from 'react'
-import p from 'prop-types'
+import { useSelector, useDispatch } from 'react-redux'
 import {
   Button,
   Dialog,
   DialogContent,
   DialogActions,
   Grid,
+  useMediaQuery,
 } from '@material-ui/core/index'
 import DialogTitleWrapper from '../../dialogs/components/DialogTitleWrapper'
 import CalendarSubscribe from './CalendarSubscribe'
 import StatusUpdateNotification from '../UserStatusUpdatePreference'
 import { useSessionInfo } from '../../util/RequireConfig'
+import { SET_USER_SETTINGS_OPEN } from '../../actions'
 
 export default function UserSettings(props) {
   const { userID } = useSessionInfo()
+  const isFullScreen = useMediaQuery(theme => theme.breakpoints.down('md'))
+  const userSettingsOpen = useSelector(state => state.user.userSettingsOpen)
+  const dispatch = useDispatch()
+
+  // todo: make better
   if (!userID) return null
 
   return (
-    <Dialog fullWidth open={props.open} onClose={props.onClose}>
-      <DialogTitleWrapper fullScreen={false} title='Settings' />
+    <Dialog
+      fullWidth
+      fullScreen={isFullScreen}
+      open={userSettingsOpen}
+      onClose={() => dispatch({ type: SET_USER_SETTINGS_OPEN, payload: false })}
+    >
+      <DialogTitleWrapper title='Settings' />
       <DialogContent>
         <Grid container spacing={2}>
           <Grid item xs={12}>
@@ -36,9 +48,4 @@ export default function UserSettings(props) {
       </DialogActions>
     </Dialog>
   )
-}
-
-UserSettings.propTypes = {
-  onClose: p.func.isRequired,
-  open: p.bool.isRequired,
 }

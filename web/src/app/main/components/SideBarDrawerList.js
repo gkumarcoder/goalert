@@ -25,11 +25,10 @@ import routeConfig, { getPath } from '../routes'
 import { Link, NavLink } from 'react-router-dom'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import { CurrentUserAvatar } from '../../util/avatar'
-import { authLogout } from '../../actions'
+import { authLogout, setUserSettingsOpen } from '../../actions'
 import { connect } from 'react-redux'
 import RequireConfig, { Config } from '../../util/RequireConfig'
 import NavSubMenu from './NavSubMenu'
-import UserSettings from '../../users/settings/UserSettings'
 
 const navIcons = {
   Alerts: AlertsIcon,
@@ -68,6 +67,7 @@ const styles = theme => ({
 const mapDispatchToProps = dispatch => {
   return {
     logout: () => dispatch(authLogout(true)),
+    openSettings: () => dispatch(setUserSettingsOpen(true)),
   }
 }
 
@@ -80,10 +80,6 @@ export default class SideBarDrawerList extends React.PureComponent {
   static propTypes = {
     onWizard: p.func.isRequired,
     classes: p.object.isRequired,
-  }
-
-  state = {
-    showSettingsDialog: false,
   }
 
   renderSidebarLink = (icon, path, label, props = {}) => {
@@ -213,7 +209,7 @@ export default class SideBarDrawerList extends React.PureComponent {
           </Config>
 
           {this.renderSidebarItem(AdminIcon, 'Settings', {
-            onClick: () => this.setState({ showSettingsDialog: true }),
+            onClick: this.props.openSettings,
           })}
 
           {this.renderSidebarLink(
@@ -229,11 +225,6 @@ export default class SideBarDrawerList extends React.PureComponent {
           )}
           {this.renderSidebarNavLink(CurrentUserAvatar, '/profile', 'Profile')}
         </List>
-
-        <UserSettings
-          onClose={() => this.setState({ showSettingsDialog: false })}
-          open={this.state.showSettingsDialog}
-        />
       </React.Fragment>
     )
   }
