@@ -15,7 +15,7 @@ import CopyIcon from 'mdi-material-ui/ContentCopy'
 import CalendarIcon from 'mdi-material-ui/Calendar'
 
 const CAL_URL =
-  'https://www.calendarlabs.com/ical-calendar/ics/22/Chicago_Cubs_-_MLB.ics'
+  'webcal://www.calendarlabs.com/ical-calendar/ics/22/Chicago_Cubs_-_MLB.ics'
 
 const options = [
   {
