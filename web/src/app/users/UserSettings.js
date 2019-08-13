@@ -102,6 +102,15 @@ export default function UserSettings(props) {
           keepMounted
           open={Boolean(anchorEl)}
           onClose={() => setAnchorEl(null)}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          getContentAnchorEl={null}
         >
           {options.map((option, idx) => (
             <MenuItem
