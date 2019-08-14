@@ -24,7 +24,6 @@ import routeConfig, { getPath } from '../routes'
 
 import { Link, NavLink } from 'react-router-dom'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
-import { CurrentUserAvatar } from '../../util/avatar'
 import { authLogout, setUserSettingsOpen } from '../../actions'
 import { connect } from 'react-redux'
 import RequireConfig, { Config } from '../../util/RequireConfig'
@@ -223,7 +222,6 @@ export default class SideBarDrawerList extends React.PureComponent {
               },
             },
           )}
-          {this.renderSidebarNavLink(CurrentUserAvatar, '/profile', 'Profile')}
         </List>
       </React.Fragment>
     )

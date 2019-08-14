@@ -8,10 +8,11 @@ import ToolbarTitle from './components/ToolbarTitle'
 import ToolbarAction from './components/ToolbarAction'
 import ErrorBoundary from './ErrorBoundary'
 import routeConfig, { renderRoutes } from './routes'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Link } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import { connect } from 'react-redux'
 
+import { CurrentUserAvatar } from '../util/avatar'
 import { PageActionContainer, PageActionProvider } from '../util/PageActions'
 import { PageNotFound as LazyPageNotFound } from '../error-pages/Errors'
 import LazySideBarDrawerList from './components/SideBarDrawerList'
@@ -50,6 +51,9 @@ const styles = theme => ({
     paddingTop: '1em',
     [theme.breakpoints.up('md')]: { width: '75%' },
     [theme.breakpoints.down('sm')]: { width: '100%' },
+  },
+  profileAvatar: {
+    marginLeft: '0.5em',
   },
 })
 
@@ -96,6 +100,10 @@ export default class App extends React.PureComponent {
               <ToolbarTitle />
 
               <PageActionContainer />
+
+              <Link to={'/profile'}>
+                <CurrentUserAvatar className={classes.profileAvatar} />
+              </Link>
             </Toolbar>
           </AppBar>
 
