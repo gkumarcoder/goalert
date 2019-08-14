@@ -17,8 +17,9 @@ import {
   RotateRight as RotationsIcon,
   Today as SchedulesIcon,
   VpnKey as ServicesIcon,
-  Settings as AdminIcon,
+  Settings as SettingsIcon,
 } from '@material-ui/icons'
+import AdminIcon from 'mdi-material-ui/AccountTie'
 
 import routeConfig, { getPath } from '../routes'
 
@@ -207,7 +208,7 @@ export default class SideBarDrawerList extends React.PureComponent {
             }
           </Config>
 
-          {this.renderSidebarItem(AdminIcon, 'Settings', {
+          {this.renderSidebarItem(SettingsIcon, 'Settings', {
             onClick: this.props.openSettings,
           })}
 
