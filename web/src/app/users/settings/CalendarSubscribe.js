@@ -67,6 +67,7 @@ export default function CalendarSubscribe() {
         break // href acts as the button's onClick
       case 1: // refresh
         // todo
+        setShowTooltip(true)
         break
       case 2: // copy
         copyToClipboard(HTTP_URL)
