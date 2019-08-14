@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Button,
   ButtonGroup,
@@ -7,15 +7,18 @@ import {
   Menu,
   MenuItem,
   makeStyles,
+  Tooltip,
   Typography,
 } from '@material-ui/core/index'
 import RefreshIcon from '@material-ui/icons/Refresh'
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown'
 import CopyIcon from 'mdi-material-ui/ContentCopy'
 import CalendarIcon from 'mdi-material-ui/Calendar'
+import copyToClipboard from '../../util/copyToClipboard'
 
-const CAL_URL =
-  'webcal://www.calendarlabs.com/ical-calendar/ics/22/Chicago_Cubs_-_MLB.ics'
+const URL = 'www.calendarlabs.com/ical-calendar/ics/22/Chicago_Cubs_-_MLB.ics'
+const HTTP_URL = 'https://' + URL
+const WEBCAL_URL = 'webcal://' + URL
 
 const options = [
   {
@@ -44,6 +47,7 @@ const useStyles = makeStyles(theme => ({
 export default function CalendarSubscribe() {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [selectedIndex, setSelectedIndex] = React.useState(0)
+  const [showTooltip, setShowTooltip] = useState(false)
   const classes = useStyles()
 
   function handleOpenMenu(event) {
@@ -55,14 +59,19 @@ export default function CalendarSubscribe() {
     setAnchorEl(null)
   }
 
-  function handleButtonClick() {
+  function handleButtonClick(event) {
+    event.preventDefault()
+
     switch (selectedIndex) {
-      case 0:
-        return null // href acts as the button's onClick
-      case 1:
-        return console.log('Refreshing URL')
-      case 2:
-        return console.log('Copied URL!')
+      case 0: // subscribe
+        break // href acts as the button's onClick
+      case 1: // refresh
+        // todo
+        break
+      case 2: // copy
+        copyToClipboard(HTTP_URL)
+        setShowTooltip(true)
+        break
     }
   }
 
@@ -78,15 +87,28 @@ export default function CalendarSubscribe() {
           color='primary'
           aria-label='split button'
         >
-          <Button
-            color='primary'
-            href={selectedIndex === 0 ? CAL_URL : null}
-            onClick={handleButtonClick}
-            variant='contained'
+          <Tooltip
+            onClose={() => setShowTooltip(false)}
+            open={showTooltip}
+            title={
+              selectedIndex === 1
+                ? 'Generated!'
+                : selectedIndex === 2
+                ? 'Copied!'
+                : ''
+            }
+            placement='bottom'
           >
-            <Icon className={classes.calIcon} />
-            {title}
-          </Button>
+            <Button
+              color='primary'
+              href={WEBCAL_URL}
+              onClick={handleButtonClick}
+              variant='contained'
+            >
+              <Icon className={classes.calIcon} />
+              {title}
+            </Button>
+          </Tooltip>
           <Button
             color='primary'
             size='small'
