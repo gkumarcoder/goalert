@@ -7,6 +7,7 @@ import withStyles from '@material-ui/core/styles/withStyles'
 import moment from 'moment'
 import { connect } from 'react-redux'
 import { urlParamSelector } from '../selectors'
+import OtherActions from '../util/OtherActions'
 
 const styles = {
   abs: {
@@ -15,7 +16,7 @@ const styles = {
   container: {
     paddingBottom: '1em',
     justifyContent: 'center',
-    alignItems: 'flex-end',
+    alignItems: 'center',
   },
   flexGrow: {
     flexGrow: 1,
@@ -169,13 +170,22 @@ export default class CalendarToolbar extends React.PureComponent {
           </Button>
         </Grid>
         <Grid item md={12} lg='auto'>
-          <Button
-            data-cy='add-override'
-            variant='outlined'
-            onClick={() => onOverrideClick()}
-          >
-            Add Override
-          </Button>
+          <OtherActions
+            actions={[
+              {
+                label: 'Add Override',
+                onClick: () => onOverrideClick(),
+              },
+              {
+                label: 'Subscribe to My Shifts',
+                onClick: () => console.log('Subscribed!'),
+              },
+              {
+                label: 'Subscribe to All Shifts',
+                onClick: () => console.log('Subscribed!'),
+              },
+            ]}
+          />
         </Grid>
         <Grid item className={classes.abs}>
           <Typography

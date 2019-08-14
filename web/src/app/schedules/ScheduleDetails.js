@@ -17,6 +17,7 @@ import { urlParamSelector } from '../selectors'
 import { resetURLParams, setURLParam } from '../actions'
 import { connect } from 'react-redux'
 import { QuerySetFavoriteButton } from '../util/QuerySetFavoriteButton'
+import CalendarSubscribe from '../users/settings/CalendarSubscribe'
 
 const query = gql`
   query($id: ID!) {
@@ -124,7 +125,14 @@ export default class ScheduleDetails extends React.PureComponent {
           title={data.name}
           details={data.description}
           titleFooter={
-            <React.Fragment>Time Zone: {data.timeZone}</React.Fragment>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                Time Zone: {data.timeZone}
+              </Grid>
+              <Grid item xs={12}>
+                <CalendarSubscribe />
+              </Grid>
+            </Grid>
           }
           links={[
             { label: 'Assignments', url: 'assignments' },
