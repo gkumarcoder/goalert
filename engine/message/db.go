@@ -266,11 +266,12 @@ func NewDB(ctx context.Context, db *sql.DB, c *Config) (*DB, error) {
 				cm.disabled
 		`),
 		pending: p.P(fmt.Sprintf(`
+			with recently_fired_to as (select contact_method_id from outgoing_messages where last_status != 'pending' and last_status_at > now() - '60 seconds'::interval)
 			select
 				DISTINCT ON (msg.contact_method_id)
 				msg.id,
 				msg.message_type,
-			    msg.contact_method_id,
+			  msg.contact_method_id,
 				cm.type,
 				msg.alert_id,
 				msg.alert_log_id,
@@ -281,7 +282,7 @@ func NewDB(ctx context.Context, db *sql.DB, c *Config) (*DB, error) {
 			left join user_contact_methods cm on cm.id = msg.contact_method_id
 			left join notification_channels chan on chan.id = msg.channel_id
 			where last_status = 'pending' and (not cm isnull or not chan isnull)
-			and not EXISTS (select * from outgoing_messages where contact_method_id = msg.contact_method_id and last_status != 'pending' and last_status_at > now() - '60 seconds'::interval)
+			and cm.id not in (select * from recently_fired_to)
 			order by
 				msg.contact_method_id,
 				msg.message_type,
