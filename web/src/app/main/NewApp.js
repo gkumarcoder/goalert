@@ -7,7 +7,7 @@ import isFullScreen from '@material-ui/core/withMobileDialog'
 import ToolbarTitle from './components/ToolbarTitle'
 import ToolbarAction from './components/ToolbarAction'
 import ErrorBoundary from './ErrorBoundary'
-import routeConfig, { renderRoutes } from './routes'
+import routeConfig, { Routes } from './routes'
 import { Switch, Route } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import { connect } from 'react-redux'
@@ -128,7 +128,7 @@ export default class App extends React.PureComponent {
                 <Grid container justify='center'>
                   <Grid className={classes.containerClass} item>
                     <Switch>
-                      {renderRoutes(routeConfig)}
+                      <Routes routeConfig={routeConfig} />
                       <Route component={() => <LazyPageNotFound />} />
                     </Switch>
                   </Grid>

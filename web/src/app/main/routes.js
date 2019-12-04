@@ -10,11 +10,16 @@ import UserRouter from '../users/UserRouter'
 import AdminRouter from '../admin/AdminRouter'
 import WizardRouter from '../wizard/WizardRouter'
 import IntegrationKeyAPI from '../documentation/components/IntegrationKeyAPI'
+import { useSessionInfo } from '../util/RequireConfig'
 
 export const getPath = p => (Array.isArray(p.path) ? p.path[0] : p.path)
 
-export function renderRoutes(routeConfig = []) {
+export function Routes(props) {
   const routes = []
+
+  const { userID } = useSessionInfo()
+
+  const routeConfig = props.routeConfig
 
   routeConfig.forEach((cfg, idx) => {
     const _path = cfg.path
@@ -71,6 +76,16 @@ export function renderRoutes(routeConfig = []) {
       />,
     )
   })
+
+  console.log(userID)
+
+  routes.push(
+    <Redirect
+      key='redir_usr_details_to_profile'
+      from={`/users/${userID}`}
+      to='/profile'
+    />,
+  )
 
   return routes
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import gql from 'graphql-tag'
 import { UserAvatar } from '../util/avatar/types'
 import QueryList from '../lists/QueryList'
@@ -53,21 +53,15 @@ function UserOnCallAssignments() {
 }
 
 export default function UserRouter() {
-  const { userID } = useSessionInfo()
-
   return (
     <Switch>
       <Route exact path='/users' component={UserList} />
       <Route
         exact
         path='/users/:userID'
-        render={({ match }) =>
-          match.params.userID === userID ? (
-            <Redirect to='/profile' />
-          ) : (
-            <UserDetails userID={match.params.userID} readOnly />
-          )
-        }
+        render={({ match }) => (
+          <UserDetails userID={match.params.userID} readOnly />
+        )}
       />
       <Route exact path='/profile' component={UserProfile} />
       <Route
